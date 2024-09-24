@@ -4,7 +4,7 @@ import Layout from '../components/Layout/Layout'
 
 const HomePage = () => {
   return (
-    <Layout>
+    <Layout title={'Home - ClickNBuy'}>
         <h1>Homepage</h1>
     </Layout>
   )
