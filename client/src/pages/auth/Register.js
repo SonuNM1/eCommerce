@@ -10,11 +10,15 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const [answer, setAnswer] = useState("");
   const navigate = useNavigate();
 
   // form function
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    console.log({ name, email, password, phone, address, answer });
+
     try {
       const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/register`, {
         name,
@@ -22,6 +26,7 @@ const Register = () => {
         password,
         phone,
         address,
+        answer,
       });
       if (res && res.data.success) {
         toast.success(res.data && res.data.message);
@@ -37,7 +42,7 @@ const Register = () => {
 
   return (
     <Layout title="Register - ClickNBuy">
-      <div className="form-container ">
+      <div className="form-container wider-form">
         <form onSubmit={handleSubmit}>
           <h4 className="title">REGISTER FORM</h4>
           <div className="mb-3">
@@ -78,6 +83,16 @@ const Register = () => {
               onChange={(e) => setPhone(e.target.value)}
               className="form-control"
               placeholder="Enter Your Phone"
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              type="text"
+              value={answer}
+              onChange={(e) => setAnswer(e.target.value)}
+              className="form-control"
+              placeholder="What was the name of your first school teacher?"
               required
             />
           </div>
