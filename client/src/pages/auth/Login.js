@@ -18,19 +18,16 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(
-        `${process.env.REACT_APP_API}/api/v1/auth/login`,
-        {
-          email,
-          password,
-        }
-      );
+      const res = await axios.post("/api/v1/auth/login", {
+        email,
+        password,
+      });
       if (res && res.data.success) {
         toast.success(res.data && res.data.message);
         setAuth({
           ...auth,
           user: res.data.user,
-          token: res.data.user,
+          token: res.data.token,
         });
         localStorage.setItem("auth", JSON.stringify(res.data));
         navigate(location.state || "/");
@@ -42,9 +39,10 @@ const Login = () => {
       toast.error("Something went wrong");
     }
   };
+
   return (
     <Layout title="Login - ClickNBuy">
-      <div className="form-container ">
+      <div className="form-container">
         <form onSubmit={handleSubmit}>
           <h4 className="title">LOGIN FORM</h4>
 
@@ -54,7 +52,8 @@ const Login = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="form-control"
-              placeholder="Enter Your Email "
+              id="exampleInputEmail1"
+              placeholder="Enter Your Email"
               required
             />
           </div>
@@ -64,13 +63,12 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="form-control"
+              id="exampleInputPassword1"
               placeholder="Enter Your Password"
               required
             />
           </div>
-
           <div className="mb-3 d-flex justify-content-between">
-            
             <button
               type="button"
               className="btn btn-primary me-2"
@@ -82,10 +80,26 @@ const Login = () => {
             </button>
 
             <button type="submit" className="btn btn-primary">
-            Login
-          </button>
+              LOGIN
+            </button>
           </div>
-          
+
+          <div className="text-end mt-3">
+            <small>
+              Haven't registered?{" "}
+              <span
+                onClick={() => navigate("/register")}
+                style={{
+                  fontSize: "0.9rem",
+                  color: "#007bff",
+                  cursor: "pointer",
+                  textDecoration: "underline",
+                }}
+              >
+                Register here
+              </span>
+            </small>
+          </div>
         </form>
       </div>
     </Layout>

@@ -16,11 +16,8 @@ const Register = () => {
   // form function
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log({ name, email, password, phone, address, answer });
-
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/register`, {
+      const res = await axios.post("/api/v1/auth/register", {
         name,
         email,
         password,
@@ -42,7 +39,7 @@ const Register = () => {
 
   return (
     <Layout title="Register - ClickNBuy">
-      <div className="form-container wider-form">
+      <div className="form-container ">
         <form onSubmit={handleSubmit}>
           <h4 className="title">REGISTER FORM</h4>
           <div className="mb-3">
@@ -51,6 +48,7 @@ const Register = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="form-control"
+              id="exampleInputEmail1"
               placeholder="Enter Your Name"
               required
               autoFocus
@@ -62,6 +60,7 @@ const Register = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="form-control"
+              id="exampleInputEmail1"
               placeholder="Enter Your Email "
               required
             />
@@ -72,6 +71,7 @@ const Register = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="form-control"
+              id="exampleInputPassword1"
               placeholder="Enter Your Password"
               required
             />
@@ -82,17 +82,8 @@ const Register = () => {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               className="form-control"
+              id="exampleInputEmail1"
               placeholder="Enter Your Phone"
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="text"
-              value={answer}
-              onChange={(e) => setAnswer(e.target.value)}
-              className="form-control"
-              placeholder="What was the name of your first school teacher?"
               required
             />
           </div>
@@ -102,7 +93,19 @@ const Register = () => {
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               className="form-control"
+              id="exampleInputEmail1"
               placeholder="Enter Your Address"
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              type="text"
+              value={answer}
+              onChange={(e) => setAnswer(e.target.value)}
+              className="form-control"
+              id="exampleInputEmail1"
+              placeholder="What is the name of your first school teacher?"
               required
             />
           </div>
