@@ -7,6 +7,8 @@ The purpose of this code is to create a context for authentication (auth) for ou
 
 import { useState, useContext, createContext, useEffect } from "react";
 
+import axios from "axios";
+
 // Create a new context object called AuthContext..This context will hold the authentication data (user and token). 'AuthContext' is a storage box that holds the authentication data (user and token). 
 
 const AuthContext = createContext() ; 
@@ -21,6 +23,10 @@ const AuthProvider = ({children}) => {
         user: null,
         token: ""
     }) ; 
+
+    // default axios - in every request, this will be the header
+
+    axios.defaults.headers.common['Authorization'] = auth?.token ; 
 
     useEffect(()=>{
         const data = localStorage.getItem('auth') ; 
