@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Layout from "./../components/Layout/Layout";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Checkbox, Radio } from "antd";
 import { Prices } from "../components/Prices";
-import { useNavigate } from "react-router-dom";
-
 
 const HomePage = () => {
 
-  const navigate = useNavigate() ; 
-
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [checked, setChecked] = useState([]);
@@ -36,7 +34,7 @@ const HomePage = () => {
     getTotal();
   }, []);
 
-  //Get products
+  // Get products 
   
   const getAllProducts = async () => {
     try {
@@ -50,7 +48,7 @@ const HomePage = () => {
     }
   };
 
-  // Get total count
+  // Get total count 
 
   const getTotal = async () => {
     try {
@@ -67,7 +65,7 @@ const HomePage = () => {
   }, [page]);
 
   // Load more
-
+  
   const loadMore = async () => {
     try {
       setLoading(true);
@@ -80,7 +78,7 @@ const HomePage = () => {
     }
   };
 
-  // Filter by category 
+  // Filter by category
 
   const handleFilter = (value, id) => {
     let all = [...checked];
@@ -100,8 +98,8 @@ const HomePage = () => {
     if (checked.length || radio.length) filterProduct();
   }, [checked, radio]);
 
-  // Get filtered products 
-
+  //  Get filtered product 
+  
   const filterProduct = async () => {
     try {
       const { data } = await axios.post("/api/v1/product/product-filters", {
@@ -114,9 +112,8 @@ const HomePage = () => {
     }
   };
 
-
   return (
-    <Layout title={"All products-Best offers : ClickNBuy "}>
+    <Layout title={"ALl Products - Best Offers"}>
       <div className="container-fluid row mt-3">
         <div className="col-md-2">
           <h4 className="text-center">Filter By Category</h4>
@@ -130,7 +127,9 @@ const HomePage = () => {
               </Checkbox>
             ))}
           </div>
+
           {/* price filter */}
+          
           <h4 className="text-center mt-4">Filter By Price</h4>
           <div className="d-flex flex-column">
             <Radio.Group onChange={(e) => setRadio(e.target.value)}>
@@ -146,15 +145,15 @@ const HomePage = () => {
               className="btn btn-danger"
               onClick={() => window.location.reload()}
             >
-              RESET FILTERS
+              Reset Filters
             </button>
           </div>
         </div>
-        <div className="col-md-9">
+        <div className="col-md-9 offset-1">
           <h1 className="text-center">All Products</h1>
           <div className="d-flex flex-wrap">
             {products?.map((p) => (
-              <div className="card m-2" style={{ width: "18rem" }}>
+              <div className="card m-2" style={{ width: "18rem" }} key={p._id}>
                 <img
                   src={`/api/v1/product/product-photo/${p._id}`}
                   className="card-img-top"
@@ -165,14 +164,16 @@ const HomePage = () => {
                   <p className="card-text">
                     {p.description.substring(0, 30)}...
                   </p>
-                  <p className="card-text"> ₹ {p.price}/-</p>
-
-                  <button 
-                  className="btn btn-primary ms-1"
-                  onClick={() => navigate(`/product/${p.slug}`)}
-                  >More Details</button>
-
-                  <button className="btn btn-secondary ms-1">ADD TO CART</button>
+                  <p className="card-text"> ₹ {p.price}</p>
+                  <button
+                    className="btn btn-primary ms-1"
+                    onClick={() => navigate(`/product/${p.slug}`)}
+                  >
+                    More Details
+                  </button>
+                  <button className="btn btn-secondary ms-1">
+                    Add to Cart
+                  </button>
                 </div>
               </div>
             ))}
