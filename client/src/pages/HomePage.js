@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Layout from "./../components/Layout/Layout";
-
 import axios from "axios";
 import { Checkbox, Radio } from "antd";
 import { Prices } from "../components/Prices";
+import { useNavigate } from "react-router-dom";
+
+
 const HomePage = () => {
+
+  const navigate = useNavigate() ; 
+
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [checked, setChecked] = useState([]);
@@ -13,7 +18,8 @@ const HomePage = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  //get all cat
+  // Get all category 
+
   const getAllCategory = async () => {
     try {
       const { data } = await axios.get("/api/v1/category/get-category");
@@ -29,7 +35,9 @@ const HomePage = () => {
     getAllCategory();
     getTotal();
   }, []);
-  //get products
+
+  //Get products
+  
   const getAllProducts = async () => {
     try {
       setLoading(true);
@@ -42,7 +50,8 @@ const HomePage = () => {
     }
   };
 
-  //getTOtal COunt
+  // Get total count
+
   const getTotal = async () => {
     try {
       const { data } = await axios.get("/api/v1/product/product-count");
@@ -56,7 +65,9 @@ const HomePage = () => {
     if (page === 1) return;
     loadMore();
   }, [page]);
-  //load more
+
+  // Load more
+
   const loadMore = async () => {
     try {
       setLoading(true);
@@ -69,7 +80,8 @@ const HomePage = () => {
     }
   };
 
-  // filter by cat
+  // Filter by category 
+
   const handleFilter = (value, id) => {
     let all = [...checked];
     if (value) {
@@ -79,6 +91,7 @@ const HomePage = () => {
     }
     setChecked(all);
   };
+
   useEffect(() => {
     if (!checked.length || !radio.length) getAllProducts();
   }, [checked.length, radio.length]);
@@ -87,7 +100,8 @@ const HomePage = () => {
     if (checked.length || radio.length) filterProduct();
   }, [checked, radio]);
 
-  //get filterd product
+  // Get filtered products 
+
   const filterProduct = async () => {
     try {
       const { data } = await axios.post("/api/v1/product/product-filters", {
@@ -99,8 +113,10 @@ const HomePage = () => {
       console.log(error);
     }
   };
+
+
   return (
-    <Layout title={"ALl Products - Best offers "}>
+    <Layout title={"All products-Best offers : ClickNBuy "}>
       <div className="container-fluid row mt-3">
         <div className="col-md-2">
           <h4 className="text-center">Filter By Category</h4>
@@ -149,9 +165,14 @@ const HomePage = () => {
                   <p className="card-text">
                     {p.description.substring(0, 30)}...
                   </p>
-                  <p className="card-text"> $ {p.price}</p>
-                  <button class="btn btn-primary ms-1">More Details</button>
-                  <button class="btn btn-secondary ms-1">ADD TO CART</button>
+                  <p className="card-text"> ₹ {p.price}/-</p>
+
+                  <button 
+                  className="btn btn-primary ms-1"
+                  onClick={() => navigate(`/product/${p.slug}`)}
+                  >More Details</button>
+
+                  <button className="btn btn-secondary ms-1">ADD TO CART</button>
                 </div>
               </div>
             ))}
