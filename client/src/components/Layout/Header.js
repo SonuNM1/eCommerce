@@ -4,19 +4,20 @@ import { useAuth } from "../../context/auth";
 import toast from "react-hot-toast";
 import SearchInput from "../Form/SearchInput";
 import useCategory from "../../hooks/useCategory";
+import { useCart } from "../../context/cart";
+import { ShoppingCartOutlined } from "@ant-design/icons";
 
 const Header = () => {
-
   const [auth, setAuth] = useAuth();
+  const [cart, setCart] = useCart();
   const categories = useCategory();
   const handleLogout = () => {
-
     setAuth({
       ...auth,
       user: null,
       token: "",
     });
-    
+
     localStorage.removeItem("auth");
     toast.success("Logout Successfully");
   };
@@ -125,7 +126,14 @@ const Header = () => {
               )}
               <li className="nav-item">
                 <NavLink to="/cart" className="nav-link">
-                  Cart (0)
+                  <ShoppingCartOutlined
+                    style={{
+                      fontSize: "18px",
+                      color: "black",
+                      marginRight: "1px", 
+                    }}
+                  />
+                  ({auth?.token ? cart?.length: 0})
                 </NavLink>
               </li>
             </ul>
