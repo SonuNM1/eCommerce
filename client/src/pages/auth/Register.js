@@ -4,7 +4,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import "../../styles/AuthStyles.css";
+
 const Register = () => {
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,6 +16,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   // form function
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -39,7 +42,7 @@ const Register = () => {
 
   return (
     <Layout title="Register - ClickNBuy">
-      <div className="form-container ">
+      <div className="form-container">
         <form onSubmit={handleSubmit}>
           <h4 className="title">REGISTER FORM</h4>
           <div className="mb-3">
@@ -48,7 +51,6 @@ const Register = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="form-control"
-              id="exampleInputEmail1"
               placeholder="Enter Your Name"
               required
               autoFocus
@@ -60,8 +62,7 @@ const Register = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="form-control"
-              id="exampleInputEmail1"
-              placeholder="Enter Your Email "
+              placeholder="Enter Your Email"
               required
             />
           </div>
@@ -71,7 +72,6 @@ const Register = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="form-control"
-              id="exampleInputPassword1"
               placeholder="Enter Your Password"
               required
             />
@@ -82,7 +82,6 @@ const Register = () => {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               className="form-control"
-              id="exampleInputEmail1"
               placeholder="Enter Your Phone"
               required
             />
@@ -93,7 +92,6 @@ const Register = () => {
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               className="form-control"
-              id="exampleInputEmail1"
               placeholder="Enter Your Address"
               required
             />
@@ -104,14 +102,32 @@ const Register = () => {
               value={answer}
               onChange={(e) => setAnswer(e.target.value)}
               className="form-control"
-              id="exampleInputEmail1"
               placeholder="What is the name of your first school teacher?"
               required
             />
           </div>
+
           <button type="submit" className="btn btn-primary">
             REGISTER
           </button>
+
+          {/* Already registered? Login here link */}
+          <div className="text-end mt-3">
+            <small>
+              Already registered?{" "}
+              <span
+                onClick={() => navigate("/login")}
+                style={{
+                  fontSize: "0.9rem",
+                  color: "#007bff",
+                  cursor: "pointer",
+                  textDecoration: "underline",
+                }}
+              >
+                Login here
+              </span>
+            </small>
+          </div>
         </form>
       </div>
     </Layout>
