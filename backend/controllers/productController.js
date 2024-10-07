@@ -1,7 +1,21 @@
 import productModel from "../models/productModel.js";
 import fs from "fs"; // file system
 import slugify from "slugify";
-import categoryModel from '../models/categoryModel.js' ; 
+import categoryModel from "../models/categoryModel.js";
+import braintree from "braintree";
+import orderModel from "../models/orderModel.js";
+import dotenv from 'dotenv' ; 
+
+dotenv.config() ; 
+
+// Payment gateway
+
+var gateway = new braintree.BraintreeGateway({
+  environment: braintree.Environment.Sandbox,
+  merchantId: process.env.BRAINTREE_MERCHANT_ID,
+  publicKey: process.env.BRAINTREE_PUBLIC_KEY,
+  privateKey: process.env.BRAINTREE_PRIVATE_KEY,
+});
 
 // CREATE product
 
@@ -290,10 +304,10 @@ export const productListController = async (req, res) => {
       .limit(perPage)
       .sort({ createdAt: -1 });
 
-      res.status(200).send({
-        success: true, 
-        products
-      })
+    res.status(200).send({
+      success: true,
+      products,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).send({
@@ -304,7 +318,7 @@ export const productListController = async (req, res) => {
   }
 };
 
-// Search Product Controller 
+// Search Product Controller
 
 export const searchProductController = async (req, res) => {
   try {
@@ -328,7 +342,7 @@ export const searchProductController = async (req, res) => {
   }
 };
 
-// Similar products 
+// Similar products
 
 export const relatedProductController = async (req, res) => {
   try {
@@ -355,7 +369,7 @@ export const relatedProductController = async (req, res) => {
   }
 };
 
-// Get product by category 
+// Get product by category
 
 export const productCategoryController = async (req, res) => {
   try {
@@ -375,3 +389,58 @@ export const productCategoryController = async (req, res) => {
     });
   }
 };
+
+// Payment gateway API - token
+
+export const braintreeTokenController = async (req, res) => {
+  try {
+    gateway.clientToken.generate({}, function (err, response) {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.send(response);
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Payment gateway API - payment
+
+export const brainTreePaymentController = async (req, res) => {
+  try {
+    const { cart, nonce } = req.body;
+    let total = 0;
+
+    cart.map((i) => (total += i.price));
+
+    let newTransaction = gateway.transation.sale(
+      {
+        amount: total,
+        paymentMethodNonce: nonce,
+        options: {
+          submitForSettlement: true,
+        },
+      },
+      function (error, result) {
+        if (result) {
+          const order = new orderModel({
+            products: cart,
+            payment: result,
+            buyer: req.user._id,
+          }).save();
+
+          res.json({ ok: true });
+        } else {
+          res.status(500).send(error);
+        }
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+// 24
