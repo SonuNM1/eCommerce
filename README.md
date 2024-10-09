@@ -22,3 +22,10 @@
 
 - Context is created with 'createContext' and a 'Provider' is used to make the data available to any child components. A custom hook (useContext) is then used to access the context in those child components. 
 
+
+#### Payment Gateway 
+
+- Nonce 
+
+- BrainTree-paypal integration 
+
