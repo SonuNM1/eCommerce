@@ -1,81 +1,113 @@
-.banner-img {
-    margin-top: 60px;
+.home-page {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem; /* Increased gap for overall layout */
+}
+
+.filters {
+  flex: 1; 
+  max-width: 250px; 
+  margin-right: 1rem;
+}
+
+.products-section {
+  flex: 3; 
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem; /* Increased gap between cards */
+}
+
+.home-page .card {
+  background-color: rgba(128, 128, 128, 0.097);
+  width: 20rem; /* Fixed width for consistency */
+  height: 500px; /* Increased height for more space */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 1rem; /* Increased margin for spacing between cards */
+}
+
+.home-page .card-img-top {
+  width: 100%;
+  height: 250px; /* Fixed height for images */
+  object-fit: cover;
+}
+
+.home-page .card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem; /* Ensure there is padding around content */
+  flex-grow: 1; /* Allows the body to take up available space */
+}
+
+.home-page .card-name-price {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.home-page .card-price {
+  color: green;
+  font-weight: bold;
+}
+
+.home-page .card-text {
+  margin-bottom: 1rem;
+}
+
+.home-page .card-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem; /* Increased gap between buttons */
+  margin-top: auto; /* Ensures buttons stick to the bottom */
+}
+
+.home-page .card img:hover {
+  transform: scale(0.95);
+  transition: transform 0.3s;
+}
+
+.home-page .btn {
+  padding: 0.5rem 1rem; /* Added padding to buttons */
+  border: none; /* Removing default button border */
+  cursor: pointer; /* Cursor pointer for buttons */
+}
+
+.home-page .btn:hover {
+  opacity: 0.9;
+}
+
+.products-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Adjusts space between cards */
+}
+
+.card {
+  flex: 0 0 calc(20% - 20px); /* Adjust to fit 5 cards in a row */
+  margin: 1rem; /* Increased margin for spacing between cards */
+  max-width: 300px; /* Increased max width to control card size */
+  height: 500px; /* Increased height for all cards */
+}
+
+.card img {
+  max-height: 250px; /* Fixed height for images */
+  object-fit: cover; /* Makes the image cover the space without distortion */
+}
+
+@media (max-width: 768px) {
+  .card {
+    flex: 0 0 calc(45% - 20px); /* 2 cards in a row on small screens */
+    margin: 1rem; /* Keep margin consistent for small screens */
+    height: 500px; /* Maintain height for small screens */
   }
-  
-  .home-page h1 {
-    color: gray;
-    font-family: "Playfair Display", serif;
+}
+
+@media (max-width: 576px) {
+  .card {
+    flex: 0 0 calc(100% - 20px); /* 1 card in a row on extra small screens */
+    margin: 1rem; /* Keep margin consistent for extra small screens */
+    height: auto; /* Remove fixed height for flexibility on extra small screens */
   }
-  
-  .home-page {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .home-page .card {
-    background-color: rgba(128, 128, 128, 0.097);
-    width: 18rem;
-  }
-  .home-page .card-name-price {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-  
-  .home-page .card-price {
-    color: green;
-    font-weight: bold;
-  }
-  .home-page button {
-    border-radius: 0;
-    width: 100%;
-    border-top-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    font-size: 14px;
-    font-weight: bold;
-  }
-  
-  .home-page .card-text {
-    color: rgb(90, 89, 89);
-  }
-  
-  .home-page .card img:hover {
-    transform: scale(0.9);
-  }
-  
-  .home-page .card-img-top {
-    height: 300px !important;
-  }
-  /* ==================
-  filters
-  ============== */
-  .filters h4 {
-    margin-top: 100px;
-    color: gray !important;
-    border-bottom: 1px solid rgba(128, 128, 128, 0.337);
-  }
-  
-  .ant-checkbox-wrapper:first-of-type {
-    margin-left: 8px;
-  }
-  
-  .ant-checkbox-wrapper {
-    margin: 2px;
-  }
-  .ant-radio-wrapper {
-    margin-bottom: 5px !important;
-    margin-left: 10px;
-  }
-  
-  .filters button {
-    background-color: black;
-    width: 100%;
-    border: none;
-    border-radius: 0;
-    margin-top: 20px;
-  }
-  
-  .loadmore {
-    color: green;
-    font-weight: bold;
-    font-size: 20px !important;
-  }
+}

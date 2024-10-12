@@ -2,96 +2,134 @@ import React, { useState, useEffect } from "react";
 import Layout from "./../components/Layout/Layout";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+import "../styles/ProductDetailsStyles.css";
+import { useCart } from "../context/cart";
+import toast from "react-hot-toast";
 
 const ProductDetails = () => {
-
-  const params = useParams();
-  const navigate = useNavigate();
+  const [cart, setCart] = useCart();
   const [product, setProduct] = useState({});
   const [relatedProducts, setRelatedProducts] = useState([]);
+  const params = useParams();
+  const navigate = useNavigate();
 
-  // Initial details 
-  
+  // Fetch product details
   useEffect(() => {
-    if (params?.slug) getProduct();
+    if (params?.slug) {
+      getProduct();
+    }
   }, [params?.slug]);
 
-  // Get product 
-  
   const getProduct = async () => {
     try {
-      const { data } = await axios.get(
-        `/api/v1/product/get-product/${params.slug}`
-      );
+      const { data } = await axios.get(`/api/v1/product/get-product/${params.slug}`);
       setProduct(data?.product);
-      getSimilarProduct(data?.product._id, data?.product.category._id);
+      getSimilarProducts(data?.product._id, data?.product.category._id);
     } catch (error) {
       console.log(error);
     }
   };
 
-  // Get similar product
-  
-  const getSimilarProduct = async (pid, cid) => {
+  // Fetch similar products
+  const getSimilarProducts = async (pid, cid) => {
     try {
-      const { data } = await axios.get(
-        `/api/v1/product/related-product/${pid}/${cid}`
-      );
+      const { data } = await axios.get(`/api/v1/product/related-product/${pid}/${cid}`);
       setRelatedProducts(data?.products);
     } catch (error) {
       console.log(error);
     }
   };
 
+  // Function to add product to the cart
+  const addToCart = () => {
+    const updatedCart = [...cart, product];
+    setCart(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    toast.success("Item added to cart");
+  };
+
   return (
     <Layout>
-      <div className="row container mt-2">
-        <div className="col-md-6">
-          <img
-            src={`/api/v1/product/product-photo/${product._id}`}
-            className="card-img-top"
-            alt={product.name}
-            height="300"
-            width={"350px"}
-          />
-        </div>
-        <div className="col-md-6 ">
-          <h1 className="text-center">Product Details</h1>
-          <h6>Name : {product.name}</h6>
-          <h6>Description : {product.description}</h6>
-          <h6>Price : ₹ {product.price}</h6>
-          <h6>Category : {product?.category?.name}</h6>
-          <button class="btn btn-secondary ms-1">Add to Cart</button>
-        </div>
-      </div>
-      <hr />
-      <div className="row container">
-        <h6>Similar Products</h6>
-        {relatedProducts.length < 1 && (
-          <p className="text-center">No similar products found</p>
-        )}
-        <div className="d-flex flex-wrap">
-          {relatedProducts?.map((p) => (
-            <div className="card m-2" style={{ width: "18rem" }}>
-              <img
-                src={`/api/v1/product/product-photo/${p?._id}`}
-                className="card-img-top"
-                alt={p.name}
-              />
-              <div className="card-body">
-                <h5 className="card-title">{p.name}</h5>
-                <p className="card-text">{p.description.substring(0, 30)}...</p>
-                <p className="card-text"> ₹ {p.price}</p>
-                <button
-                  className="btn btn-primary ms-1"
-                  onClick={() => navigate(`/product/${p.slug}`)}
-                >
-                  More Details
-                </button>
-                <button class="btn btn-secondary ms-1">Add to Cart</button>
-              </div>
+      <div className="container my-5">
+        <div className="row product-details">
+          <div className="col-md-6 d-flex justify-content-center align-items-center">
+            <img
+              src={`/api/v1/product/product-photo/${product._id}`}
+              className="img-fluid rounded"
+              alt={product.name}
+              style={{ maxHeight: "400px", objectFit: "cover" }}
+            />
+          </div>
+          <div className="col-md-6">
+            <div className="product-details-info p-4 rounded bg-light shadow-sm">
+              <h2 className="text-center mb-4">{product.name}</h2>
+              <hr />
+              <p>
+                <strong>Description:</strong> {product.description}
+              </p>
+              <p>
+                <strong>Price:</strong>{" "}
+                {product?.price?.toLocaleString("en-IN", {
+                  style: "currency",
+                  currency: "INR",
+                })}
+              </p>
+              <p>
+                <strong>Category:</strong> {product?.category?.name}
+              </p>
+
+              <button className="btn btn-dark ms-1" onClick={addToCart}>
+                Add To Cart
+              </button>
             </div>
-          ))}
+          </div>
+        </div>
+
+        <hr className="my-5" />
+
+        <div className="row similar-products">
+          <h4 className="text-center mb-4">Similar Products ➡️</h4>
+          {relatedProducts.length < 1 && (
+            <p className="text-center">No Similar Products found</p>
+          )}
+          <div className="d-flex flex-wrap justify-content-center">
+            {relatedProducts.map((p) => (
+              <div className="card m-2 shadow-sm" key={p._id} style={{ width: "18rem" }}>
+                <img
+                  src={`/api/v1/product/product-photo/${p._id}`}
+                  className="card-img-top img-fluid"
+                  alt={p.name}
+                  style={{ height: "200px", objectFit: "cover" }}
+                />
+                <div className="card-body">
+                  <h5 className="card-title">{p.name}</h5>
+                  <h6 className="card-title text-primary">
+                    {p.price.toLocaleString("en-IN", {
+                      style: "currency",
+                      currency: "INR",
+                    })}
+                  </h6>
+                  <p className="card-text">{p.description.substring(0, 60)}...</p>
+                  <div className="d-flex justify-content-between">
+                    <button className="btn btn-info" onClick={() => navigate(`/product/${p.slug}`)}>
+                      More Details
+                    </button>
+                    <button
+                      className="btn btn-dark"
+                      onClick={() => {
+                        const updatedCart = [...cart, p];
+                        setCart(updatedCart);
+                        localStorage.setItem("cart", JSON.stringify(updatedCart));
+                        toast.success("Item Added to cart");
+                      }}
+                    >
+                      Add To Cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </Layout>

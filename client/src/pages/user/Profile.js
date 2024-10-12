@@ -65,7 +65,8 @@ const Profile = () => {
             <UserMenu />
           </div>
           <div className="col-md-9">
-            <div className="form-container">
+            <div className="form-container"
+            >
               <form onSubmit={handleSubmit}>
                 <h4 className="title">User Profile</h4>
                 <div className="mb-3">
@@ -112,7 +113,7 @@ const Profile = () => {
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                     className="form-control"
-                    placeholder="Enter Your Address"
+                    placeholder="Enter Your Complete Address"
                   />
                 </div>
 

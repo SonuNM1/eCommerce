@@ -5,7 +5,6 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 
-
 const Products = () => {
   const [products, setProducts] = useState([]);
 
@@ -25,6 +24,18 @@ const Products = () => {
     getAllProducts();
   }, []);
 
+  // Inline styles
+  const cardStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%', // Ensure the card expands to the full height
+  };
+
+  const imgStyle = {
+    width: '100%',
+    height: 'auto',
+  };
+
   return (
     <Layout>
       <div className="row">
@@ -37,17 +48,23 @@ const Products = () => {
           {/* Product Grid */}
           <div className="row">
             {products?.map((p) => (
-              <div key={p._id} className="col-md-3 mb-3">
-                <Link to={`/dashboard/admin/product/${p.slug}`} className="product-link">
-                  <div className="card product-card mx-1">
+              <div key={p._id} className="col-md-3 mb-4">
+                <Link
+                  to={`/dashboard/admin/product/${p.slug}`}
+                  className="text-decoration-none"
+                >
+                  <div className="card" style={cardStyle}>
                     <img
                       src={`/api/v1/product/product-photo/${p._id}`}
-                      className="card-img-top product-img"
+                      className="card-img-top"
                       alt={p.name}
+                      style={imgStyle}
                     />
                     <div className="card-body">
                       <h5 className="card-title">{p.name}</h5>
-                      <p className="card-text">{p.description}</p>
+                      <p className="card-text">
+                        {p.description.substring(0, 60)}...
+                      </p>
                     </div>
                   </div>
                 </Link>
