@@ -1,11 +1,3 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-// Fix for __dirname in ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Your existing imports
 import express from "express";
 import colors from "colors";
 import dotenv from "dotenv";
@@ -16,21 +8,26 @@ import cors from 'cors';
 import categoryRoutes from './routes/categoryRoutes.js';
 import productRoutes from './routes/productRoutes.js';
 import userRoute from './routes/userRoute.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-// Create express app
 const app = express();
 
-// Load environment variables
 dotenv.config();
 
-// Connect to the database
-connectDB();
+connectDB(); // database connection
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
-app.use(express.static(path.join(__dirname, './client/build')));
+
+// Get the __dirname equivalent for ES module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Serve static files from the frontend build directory
+app.use(express.static(path.join(__dirname, '../../client/build')));
 
 // Routes
 app.use('/api/v1/auth', authRoutes);
@@ -38,15 +35,13 @@ app.use('/api/v1/auth', userRoute);
 app.use('/api/v1/category', categoryRoutes);
 app.use('/api/v1/product', productRoutes);
 
-// Serve the React app for any other route
-app.use('*', function (req, res) {
-    res.sendFile(path.join(__dirname, './client/build/index.html'));
+// Catch-all to serve the frontend app
+app.use('*', function(req, res) {
+    res.sendFile(path.join(__dirname, '../../client/build/index.html'));
 });
 
-// Set the port
 const PORT = process.env.PORT || 8080;
 
-// Start the server
 app.listen(PORT, () => {
     console.log(`Server running in ${process.env.DEV_MODE} mode on: http://localhost:${PORT}`.bgCyan.white);
 });
