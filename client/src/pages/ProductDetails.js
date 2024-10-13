@@ -14,6 +14,7 @@ const ProductDetails = () => {
   const navigate = useNavigate();
 
   // Fetch product details
+
   useEffect(() => {
     if (params?.slug) {
       getProduct();
@@ -31,16 +32,19 @@ const ProductDetails = () => {
   };
 
   // Fetch similar products
-  const getSimilarProducts = async (pid, cid) => {
-    try {
-      const { data } = await axios.get(`/api/v1/product/related-product/${pid}/${cid}`);
-      setRelatedProducts(data?.products);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
+ const getSimilarProducts = async (pid, cid) => {
+  try {
+    const { data } = await axios.get(`/api/v1/product/related-product/${pid}/${cid}`);
+    setRelatedProducts(data?.products);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 
   // Function to add product to the cart
+
   const addToCart = () => {
     const updatedCart = [...cart, product];
     setCart(updatedCart);

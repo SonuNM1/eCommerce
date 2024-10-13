@@ -3,7 +3,6 @@ import Layout from "../components/Layout/Layout";
 import { useParams, useNavigate } from "react-router-dom";
 import "../styles/CategoryProductStyles.css";
 import axios from "axios";
-
 const CategoryProduct = () => {
   const params = useParams();
   const navigate = useNavigate();
@@ -13,7 +12,6 @@ const CategoryProduct = () => {
   useEffect(() => {
     if (params?.slug) getPrductsByCat();
   }, [params?.slug]);
-
   const getPrductsByCat = async () => {
     try {
       const { data } = await axios.get(
@@ -45,9 +43,9 @@ const CategoryProduct = () => {
                     <div className="card-name-price">
                       <h5 className="card-title">{p.name}</h5>
                       <h5 className="card-title card-price">
-                        {p.price.toLocaleString("en-US", {
+                        {p.price.toLocaleString("en-IN", {
                           style: "currency",
-                          currency: "USD",
+                          currency: "INR",
                         })}
                       </h5>
                     </div>

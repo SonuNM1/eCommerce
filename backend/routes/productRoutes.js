@@ -63,7 +63,8 @@ router.get('/search/:keyword', searchProductController) ;
 
 // Similar products 
 
-router.get('/related-product/:cid', relatedProductController) ; 
+router.get('/related-product/:pid/:cid', relatedProductController);
+ 
 
 // Category wise product 
 
