@@ -18,7 +18,12 @@ dotenv.config();
 connectDB(); // database connection
 
 // Middleware
-app.use(cors());
+
+app.use(cors({
+    origin: ['http://localhost:3000'],
+    credentials: true 
+}));
+
 app.use(express.json());
 app.use(morgan('dev'));
 
@@ -36,6 +41,7 @@ app.use('/api/v1/category', categoryRoutes);
 app.use('/api/v1/product', productRoutes);
 
 // Catch-all to serve the frontend app
+
 app.use('*', function(req, res) {
     res.sendFile(path.join(__dirname, '../../client/build/index.html'));
 });
