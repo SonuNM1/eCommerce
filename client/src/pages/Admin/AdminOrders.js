@@ -8,6 +8,7 @@ import { Select } from "antd";
 const { Option } = Select;
 
 const AdminOrders = () => {
+  
   const [status, setStatus] = useState([
     "Not Process",
     "Processing",
@@ -18,9 +19,13 @@ const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
   const [auth] = useAuth();
 
+  // Use the environment variable for the base URL
+
+  const API_URL = process.env.REACT_APP_API ; // Default to empty if not set
+
   const getOrders = async () => {
     try {
-      const { data } = await axios.get("/api/v1/auth/all-orders");
+      const { data } = await axios.get(`${API_URL}/api/v1/auth/all-orders`);
       setOrders(data);
     } catch (error) {
       console.log(error);
@@ -33,7 +38,7 @@ const AdminOrders = () => {
 
   const handleChange = async (orderId, value) => {
     try {
-      await axios.put(`/api/v1/auth/order-status/${orderId}`, { status: value });
+      await axios.put(`${API_URL}/api/v1/auth/order-status/${orderId}`, { status: value });
       getOrders();
     } catch (error) {
       console.log(error);
@@ -123,7 +128,7 @@ const AdminOrders = () => {
                   <div className="row" style={styles.card} key={p._id}>
                     <div className="col-md-4 d-flex justify-content-center align-items-center">
                       <img
-                        src={`/api/v1/product/product-photo/${p._id}`}
+                        src={`${API_URL}/api/v1/product/product-photo/${p._id}`}
                         style={styles.img}
                         alt={p.name}
                       />

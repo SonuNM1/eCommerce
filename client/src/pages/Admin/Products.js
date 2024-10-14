@@ -5,13 +5,17 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 
+const APP_URL = process.env.REACT_APP_API ; 
+
 const Products = () => {
+
   const [products, setProducts] = useState([]);
 
   // Get all products
+
   const getAllProducts = async () => {
     try {
-      const { data } = await axios.get("/api/v1/product/get-product");
+      const { data } = await axios.get(`${APP_URL}/api/v1/product/get-product`);
       setProducts(data.products);
     } catch (error) {
       console.log(error);
@@ -20,11 +24,13 @@ const Products = () => {
   };
 
   // Lifecycle method
+
   useEffect(() => {
     getAllProducts();
   }, []);
 
   // Inline styles
+
   const cardStyle = {
     display: 'flex',
     flexDirection: 'column',
@@ -46,16 +52,17 @@ const Products = () => {
           <h1 className="text-center">All Products List</h1>
 
           {/* Product Grid */}
+
           <div className="row">
             {products?.map((p) => (
               <div key={p._id} className="col-md-3 mb-4">
                 <Link
-                  to={`/dashboard/admin/product/${p.slug}`}
+                  to={`${APP_URL}/dashboard/admin/product/${p.slug}`}
                   className="text-decoration-none"
                 >
                   <div className="card" style={cardStyle}>
                     <img
-                      src={`/api/v1/product/product-photo/${p._id}`}
+                      src={`${APP_URL}/api/v1/product/product-photo/${p._id}`}
                       className="card-img-top"
                       alt={p.name}
                       style={imgStyle}

@@ -4,6 +4,7 @@ import Layout from "./../../components/Layout/Layout";
 import axios from "axios";
 import '../../styles/userStyles.css';
 
+const APP_URL = process.env.REACT_APP_API ; 
 
 const Users = () => {
   
@@ -14,7 +15,7 @@ const Users = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("/api/v1/auth/all-users");
+      const response = await axios.get(`${APP_URL}/api/v1/auth/all-users`);
       setUsers(response.data.users);
       setLoading(false);
     } catch (error) {

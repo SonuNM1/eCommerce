@@ -24,6 +24,10 @@ const AuthProvider = ({children}) => {
         token: ""
     }) ; 
 
+    // Set axios default base URL from environment variable
+    
+    axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+
     // default axios - in every request, this will be the header
 
     axios.defaults.headers.common['Authorization'] = auth?.token ; 

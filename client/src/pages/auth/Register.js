@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import "../../styles/AuthStyles.css";
 
+const APP_URL = process.env.REACT_APP_API ; 
+
 const Register = () => {
 
   const [name, setName] = useState("");
@@ -20,7 +22,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/v1/auth/register", {
+      const res = await axios.post(`${APP_URL}/api/v1/auth/register`, {
         name,
         email,
         password,
@@ -102,7 +104,7 @@ const Register = () => {
               value={answer}
               onChange={(e) => setAnswer(e.target.value)}
               className="form-control"
-              placeholder="What is the name of your first school teacher?"
+              placeholder="Enter your favourite sports name?"
               required
             />
           </div>
@@ -112,6 +114,7 @@ const Register = () => {
           </button>
 
           {/* Already registered? Login here link */}
+          
           <div className="text-end mt-3">
             <small>
               Already registered?{" "}

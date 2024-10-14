@@ -7,6 +7,8 @@ import { Select } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 const { Option } = Select;
 
+const APP_URL = process.env.REACT_APP_API ; 
+
 
 const UpdateProduct = () => {
 
@@ -27,7 +29,7 @@ const UpdateProduct = () => {
 
   const getSingleProduct = async () => {
     try{
-        const {data} = await axios.get(`/api/v1/product/get-product/${params.slug}`) ; 
+        const {data} = await axios.get(`${APP_URL}/api/v1/product/get-product/${params.slug}`) ; 
 
         setName(data.product.name) ; 
         setId(data.product._id) ; 
@@ -51,7 +53,7 @@ const UpdateProduct = () => {
 
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/api/v1/category/get-category");
+      const { data } = await axios.get(`${APP_URL}/api/v1/category/get-category`);
       if (data?.success) {
         setCategories(data?.category);
       }
@@ -78,8 +80,8 @@ const UpdateProduct = () => {
       photo && productData.append("photo", photo);
       productData.append("category", category);
 
-      const { data } = axios.put(
-        `/api/v1/product/update-product/${id}`,
+      const { data } = await axios.put(
+        `${APP_URL}/api/v1/product/update-product/${id}`,
         productData
       );
 
@@ -105,7 +107,7 @@ const UpdateProduct = () => {
 
         if(!answer) return ; 
 
-        const {data} = await axios.delete(`/api/v1/product/delete-product/${id}`) ; 
+        const {data} = await axios.delete(`${APP_URL}/api/v1/product/delete-product/${id}`) ; 
 
         toast.success('Product deleted successfully') ; 
         navigate('/dashboard/admin/products') ; 
@@ -168,7 +170,7 @@ const UpdateProduct = () => {
                 ) : (
                     <div className="text-center">
                     <img
-                      src={`/api/v1/product/product-photo/${id}`}
+                      src={`${APP_URL}/api/v1/product/product-photo/${id}`}
                       alt="product_photo"
                       height={"200px"}
                       className="img img-responsive"

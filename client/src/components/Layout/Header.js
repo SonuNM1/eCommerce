@@ -8,9 +8,11 @@ import { useCart } from "../../context/cart";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 
 const Header = () => {
+
   const [auth, setAuth] = useAuth();
   const [cart, setCart] = useCart();
   const categories = useCategory();
+
   const handleLogout = () => {
     setAuth({
       ...auth,
@@ -41,7 +43,7 @@ const Header = () => {
             <Link to="/" className="navbar-brand"
             style={{textDecoration: "none"}}
             >
-              🛒 ClickNBuy
+              🛒 ShopLyn
             </Link>
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <SearchInput />
