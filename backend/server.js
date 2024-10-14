@@ -20,9 +20,13 @@ connectDB(); // database connection
 // Middleware
 
 app.use(cors({
-    origin: ['http://localhost:3000', 'https://shoplyn.netlify.app/'],
-    credentials: true 
+    origin: ['http://localhost:3000', 'https://shoplyn.netlify.app'],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Specify allowed methods
 }));
+
+app.options('*', cors()); // Handle preflight requests
+
 
 app.use(express.json());
 app.use(morgan('dev'));
