@@ -8,8 +8,6 @@ import cors from 'cors';
 import categoryRoutes from './routes/categoryRoutes.js';
 import productRoutes from './routes/productRoutes.js';
 import userRoute from './routes/userRoute.js';
-import path from 'path';
-import { fileURLToPath } from 'url';
 
 const app = express();
 
@@ -37,27 +35,12 @@ app.use(cors({
 app.use(express.json());
 app.use(morgan('dev'));
 
-// Get the __dirname equivalent for ES module
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Serve static files from the frontend build directory
-
-app.use(express.static(path.join(__dirname, '../../client/build')));
-
 // Routes
 
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/auth', userRoute);
 app.use('/api/v1/category', categoryRoutes);
 app.use('/api/v1/product', productRoutes);
-
-// Catch-all to serve the frontend app
-
-app.use('*', function(req, res) {
-    res.sendFile(path.join(__dirname, '../../client/build/index.html'));
-});
 
 const PORT = process.env.PORT || 8080;
 
