@@ -8,7 +8,7 @@ const Dashboard = () => {
   const [auth] = useAuth();
   
   return (
-    <Layout title={"Dashboard - ClickNBuy"}>
+    <Layout title={"Dashboard - Shoplyn"}>
       <div className="container-flui m-3 p-3">
         <div className="row">
           <div className="col-md-3">

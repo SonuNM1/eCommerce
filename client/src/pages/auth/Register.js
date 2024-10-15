@@ -43,7 +43,7 @@ const Register = () => {
   };
 
   return (
-    <Layout title="Register - ClickNBuy">
+    <Layout title="Register - Shoplyn">
       <div className="form-container">
         <form onSubmit={handleSubmit}>
           <h4 className="title">REGISTER FORM</h4>
@@ -114,7 +114,7 @@ const Register = () => {
           </button>
 
           {/* Already registered? Login here link */}
-          
+
           <div className="text-end mt-3">
             <small>
               Already registered?{" "}

@@ -45,7 +45,7 @@ const Login = () => {
   };
 
   return (
-    <Layout title="Login - ClickNBuy">
+    <Layout title="Login - Shoplyn">
       <div className="form-container">
         <form onSubmit={handleSubmit}>
           <h4 className="title">LOGIN FORM</h4>

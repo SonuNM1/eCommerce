@@ -3,7 +3,7 @@ import Layout from "./../components/Layout/Layout";
 
 const Policy = () => {
   return (
-    <Layout title={'Privacy Policy - ClickNBuy'} >
+    <Layout title={'Privacy Policy - Shoplyn'} >
       <div className="container policy">
         <h1 className="text-center my-4">🔒 Privacy Policy</h1>
         <p className="text-justify">

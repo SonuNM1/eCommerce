@@ -4,7 +4,7 @@ import Layout from "./../components/Layout/Layout";
 
 const Contact = () => {
   return (
-    <Layout title={'Contact Us - ClickNBuy'} >
+    <Layout title={'Contact Us - Shoplyn'} >
       <div className="container contactus">
         <div className="row align-items-center mt-5">
           <div className="col-md-6">
