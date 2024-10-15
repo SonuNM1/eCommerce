@@ -6,8 +6,12 @@ import "../styles/ProductDetailsStyles.css";
 import { useCart } from "../context/cart";
 import toast from "react-hot-toast";
 
+const API_URL = process.env.REACT_APP_API ; 
+
 const ProductDetails = () => {
+
   const [cart, setCart] = useCart();
+  
   const [product, setProduct] = useState({});
   const [relatedProducts, setRelatedProducts] = useState([]);
   const params = useParams();
@@ -23,7 +27,7 @@ const ProductDetails = () => {
 
   const getProduct = async () => {
     try {
-      const { data } = await axios.get(`/api/v1/product/get-product/${params.slug}`);
+      const { data } = await axios.get(`${API_URL}/api/v1/product/get-product/${params.slug}`);
       setProduct(data?.product);
       getSimilarProducts(data?.product._id, data?.product.category._id);
     } catch (error) {
@@ -35,7 +39,7 @@ const ProductDetails = () => {
 
  const getSimilarProducts = async (pid, cid) => {
   try {
-    const { data } = await axios.get(`/api/v1/product/related-product/${pid}/${cid}`);
+    const { data } = await axios.get(`${API_URL}/api/v1/product/related-product/${pid}/${cid}`);
     setRelatedProducts(data?.products);
   } catch (error) {
     console.log(error);
@@ -58,7 +62,7 @@ const ProductDetails = () => {
         <div className="row product-details">
           <div className="col-md-6 d-flex justify-content-center align-items-center">
             <img
-              src={`/api/v1/product/product-photo/${product._id}`}
+              src={`${API_URL}/api/v1/product/product-photo/${product._id}`}
               className="img-fluid rounded"
               alt={product.name}
               style={{ maxHeight: "400px", objectFit: "cover" }}
@@ -100,7 +104,7 @@ const ProductDetails = () => {
             {relatedProducts.map((p) => (
               <div className="card m-2 shadow-sm" key={p._id} style={{ width: "18rem" }}>
                 <img
-                  src={`/api/v1/product/product-photo/${p._id}`}
+                  src={`${API_URL}/api/v1/product/product-photo/${p._id}`}
                   className="card-img-top img-fluid"
                   alt={p.name}
                   style={{ height: "200px", objectFit: "cover" }}

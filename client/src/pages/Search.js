@@ -3,6 +3,8 @@ import React from 'react'
 import Layout from '../components/Layout/Layout' ;
 import { useSearch } from '../context/search';
 
+const API_URL = process.env.REACT_APP_API ; 
+
 const Search = () => {
 
     const [values, setValues] = useSearch() ; 
@@ -22,7 +24,7 @@ const Search = () => {
             {values?.results.map((p) => (
               <div className="card m-2" style={{ width: "18rem" }}>
                 <img
-                  src={`/api/v1/product/product-photo/${p._id}`}
+                  src={`${API_URL}/api/v1/product/product-photo/${p._id}`}
                   className="card-img-top"
                   alt={p.name}
                 />
