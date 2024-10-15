@@ -37,7 +37,7 @@ const Dashboard = () => {
                   </div>
                   <div className="mb-3">
                     <a className="text-center"
-                    href="http://localhost:3000/dashboard/user/profile"
+                    href="https://shoplyn.netlify.app/dashboard/user/profile"
 
                     >Update Profile</a>
                   </div>
