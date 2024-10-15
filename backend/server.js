@@ -17,7 +17,7 @@ connectDB(); // database connection
 
 // Middleware
 
-const allowedOrigins = ['https://shoplyn.netlify.app/']; 
+const allowedOrigins = ['https://shoplyn.netlify.app']; 
 
 app.use(cors({
     origin: function (origin, callback) {
